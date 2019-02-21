@@ -14,7 +14,7 @@ endfunction
 function! s:OpenWindow() abort "{{{2
 	let l:nuake_buf_nr = bufnr(s:NuakeBufNr())
 
-	execute  'silent keepalt botright ' . s:NuakeLook() . 'split'
+	execute  'silent keepalt ' . s:NuakeLook() . 'split'
 
 	if l:nuake_buf_nr != -1
 		execute  'buffer ' . l:nuake_buf_nr
@@ -46,6 +46,10 @@ function! s:InitWindow() abort "{{{2
 	setlocal norelativenumber
 	setlocal nofoldenable
 	setlocal foldcolumn=0
+
+	if g:nuake_syntax_on == 1
+		syntax on
+	endif
 endfunction
 
 function! s:CloseWindow() abort "{{{2
@@ -108,11 +112,17 @@ endfunction
 function! s:NuakeLook() abort "{{{2
 	let l:nuake_win_nr = bufwinnr(s:NuakeBufNr())
 
-	if g:nuake_position == 0
-		let l:mode = ''
+	if g:nuake_position == 'bottom'
+		let l:mode = 'botright '
 		let l:size = float2nr(g:nuake_size * floor(&lines - 2))
-	else
-		let l:mode = l:nuake_win_nr != -1 ? '' : 'vertical '
+	elseif g:nuake_position == 'right'
+		let l:mode = l:nuake_win_nr != -1 ? '' : 'botright vertical '
+		let l:size = float2nr(g:nuake_size * floor(&columns))
+	elseif g:nuake_position == 'top'
+		let l:mode = 'topleft '
+		let l:size = float2nr(g:nuake_size * floor(&lines - 2))
+	elseif g:nuake_position == 'left'
+		let l:mode = l:nuake_win_nr != -1 ? '' : 'topleft vertical '
 		let l:size = float2nr(g:nuake_size * floor(&columns))
 	endif
 
