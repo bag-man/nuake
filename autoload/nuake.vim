@@ -154,6 +154,11 @@ augroup nuake_tab_close
 	endif
 augroup END
 
+augroup nuake_term_killed
+  autocmd!
+  autocmd BufWipeout * let g:nuake_win_nr = -1
+augroup END
+
 augroup nuake_resize_window
 	autocmd!
 	autocmd VimResized *
