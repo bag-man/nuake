@@ -156,7 +156,9 @@ augroup END
 
 augroup nuake_term_killed
   autocmd!
-  autocmd BufWipeout * let g:nuake_win_nr = -1
+  autocmd BufWipeout * let s:nuake_buf_nr = -1
+  autocmd BufWipeout * let t:nuake_buf_nr = -1
+ 
 augroup END
 
 augroup nuake_resize_window
